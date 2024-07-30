@@ -87,10 +87,10 @@ export const addUser = async (formData) => {
       accountEnabled: true,
       displayName: username,
       mailNickname: email,
-      userPrincipalName: `${email}@bharathworkoutlook.onmicrosoft.com`,
+      userPrincipalName: `${email}${env("email")}`,
       passwordProfile: {
         forceChangePasswordNextSignIn: true,
-        password: 'xWwvJ]6NMw+bWH-d'
+        password: `${env("password")}`
       }
     };
 
@@ -160,8 +160,8 @@ const url = 'https://login.microsoftonline.com/ae540c42-66b9-461f-b86d-d898b590a
 
     const formData = new FormData();
     formData.append('grant_type','client_credentials')
-    formData.append('client_id','0cebb855-c8b9-4f1b-b0d1-f42180afbf4d')
-    formData.append('client_secret','QBl8Q~mhDkI_aQd4Ek~qJ8b0_pnA9UF-Aai9lare')
+    formData.append('client_id',`${env("client_id")}`)
+    formData.append('client_secret',`${env("client_secret")}`)
     formData.append('scope','https://graph.microsoft.com/.default')
 
     const config = {
@@ -169,18 +169,7 @@ const url = 'https://login.microsoftonline.com/ae540c42-66b9-461f-b86d-d898b590a
           'content-type': 'multipart/form-data'
       }
     }
-    /*
-    const payload  = {     
-      'grant_type': 'client_credentials',
-      'client_id': '0cebb855-c8b9-4f1b-b0d1-f42180afbf4d',
-      'client_secret': 'QBl8Q~mhDkI_aQd4Ek~qJ8b0_pnA9UF-Aai9lare',
-      'scope': 'https://graph.microsoft.com/.default',
-    };
-    */
 
-  //const apiUrl = 'https://graph.microsoft.com/v1.0/users';
-
-//console.log('Here 2')
      
   return await axios.post(url, formData, config )
   .then(res => {
@@ -188,46 +177,6 @@ const url = 'https://login.microsoftonline.com/ae540c42-66b9-461f-b86d-d898b590a
   });
 
 
-
-/////////////////////////////////////
-
-
-
-
-    
-/*
-
-
-
-    const url = `https://login.microsoftonline.com/${env.AZURE_AD_TENANT_ID}/oauth2/v2.0/token`;
-
-    const body = new URLSearchParams({
-      client_id: '0cebb855-c8b9-4f1b-b0d1-f42180afbf4d',
-      client_secret: 'QBl8Q~mhDkI_aQd4Ek~qJ8b0_pnA9UF-Aai9lare',
-      scope: 'https://graph.microsoft.com/.default',
-      grant_type: 'client_credentials'
-    });
-
-    const response = await fetch(url, {
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      method: 'POST',
-      body,
-    });
-
-    console.log(response);
-
-    const refreshedTokens = await response.json();
-    if (!response.ok) {
-      throw refreshedTokens;
-    }
-
-    return {
-      accessToken: 'refreshedTokens.access_token'
-    };
-
- */   
 
 
 
@@ -315,65 +264,5 @@ async function updateUserApi(token, data) {
   }
 }
 
-
-
-
-/*
-
-    const data  = async function handler(req, res) {
-      // if using `NEXTAUTH_SECRET` env variable, we detect it, and you won't actually need to `secret`
-      // const token = await getToken({ req })
-      const token = await getToken({ req, secret })
-      console.log("JSON Web Token", token)
-      res.end()
-    }
-
-export const authenticate = async (prevState, formData) => {
-  const { username, password } = Object.fromEntries(formData);
-
-  try {
-    await signIn("credentials", { username, password });
-  } catch (err) {
-    if (err.message.includes("CredentialsSignin")) {
-      return "Wrong Credentials";
-    }
-    throw err;
-  }
-};*/
-
-    
-/*
-
-
-
-    const url = `https://login.microsoftonline.com/${env.AZURE_AD_TENANT_ID}/oauth2/v2.0/token`;
-
-    const body = new URLSearchParams({
-      client_id: '0cebb855-c8b9-4f1b-b0d1-f42180afbf4d',
-      client_secret: 'QBl8Q~mhDkI_aQd4Ek~qJ8b0_pnA9UF-Aai9lare',
-      scope: 'https://graph.microsoft.com/.default',
-      grant_type: 'client_credentials'
-    });
-
-    const response = await fetch(url, {
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      method: 'POST',
-      body,
-    });
-
-    console.log(response);
-
-    const refreshedTokens = await response.json();
-    if (!response.ok) {
-      throw refreshedTokens;
-    }
-
-    return {
-      accessToken: 'refreshedTokens.access_token'
-    };
-
- */   
 
 
